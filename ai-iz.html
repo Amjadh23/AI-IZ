@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI-IZ</title>
-<meta name="description" content="AI-IZ: a hands-on AI workshop for Kolej Ibu Zain students on prompting, MCP, token-saving and a team quiz. By OrynLab.">
+<meta name="description" content="AI-IZ: a hands-on AI workshop for Kolej Ibu Zain students on prompting, MCP, token-saving and a quiz. By OrynLab.">
 <style>
 /* Local copies keep the deck legible when the venue has no internet. */
 @font-face { font-family: Poppins; src: url('assets/fonts/poppins-400.woff2') format('woff2'); font-style: normal; font-weight: 400; font-display: swap; }
@@ -827,22 +827,13 @@ input[type="range"] { width: 190px; accent-color: #000; cursor: pointer; }
 .pro .card p { font-size: 22px; color: var(--oryn-slate); margin-top: 10px; }
 .pro .card.black p { color: var(--dark-muted); }
 
-/* AI Challenge: divider with team setup */
+/* AI Challenge: divider */
 .quiz-intro .div-main { top: 200px; width: 900px; }
 .quiz-intro .div-title { font-size: 136px; }
 .qrules { margin-top: 44px; display: flex; flex-direction: column; gap: 16px; }
 .qrules li { display: flex; align-items: center; gap: 18px; font-size: 28px; }
 .qrules li .ic { width: 52px; height: 52px; }
 .qrules li .ic svg.i { width: 24px; height: 24px; }
-.team-setup { position: absolute; right: 120px; top: 200px; width: 560px; padding: 36px 36px 30px; border-radius: 4px; background: var(--dark-raise); }
-.team-setup .ts-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-.team-setup .ts-count { display: flex; align-items: center; gap: 10px; }
-.team-setup .ts-count button { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--dark-muted); background: transparent; color: #fff; font: 700 24px var(--font); cursor: pointer; }
-.team-setup .ts-count b { width: 34px; text-align: center; font-size: 26px; }
-.ts-row { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: center; margin-top: 10px; }
-.ts-row span { width: 44px; height: 44px; border-radius: 50%; background: #fff; color: #000; display: grid; place-items: center; font-weight: 800; font-size: 19px; }
-.ts-row input { height: 52px; border-radius: 6px; border: 2px solid var(--dark-rule); background: var(--dark-surface); color: #fff; padding: 0 16px; font: 600 22px var(--font); }
-.ts-row input:focus { border-color: #fff; outline: none; }
 
 /* Quiz questions */
 .q-top { position: relative; height: 40px; }
@@ -853,6 +844,10 @@ input[type="range"] { width: 190px; accent-color: #000; cursor: pointer; }
 .q-sec { position: absolute; inset: 0; display: grid; place-items: center; font-size: 52px; font-weight: 800; font-variant-numeric: tabular-nums; }
 .q-timer.low .q-sec { animation: pulse .5s ease-in-out infinite alternate; }
 .q-timer.done .q-sec { font-size: 28px; letter-spacing: .06em; }
+.q-timer { cursor: pointer; }
+.q-timer.paused .q-ring { stroke: var(--oryn-steel); }
+.q-timer.paused .q-sec { animation: blink 1s steps(1) infinite; }
+.q-timer.paused::after { content: 'Paused'; position: absolute; left: 0; right: 0; top: 100%; margin-top: 10px; text-align: center; font-size: 17px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--oryn-slate); }
 .q-text { margin-top: 20px; max-width: 1440px; font-size: 58px; font-weight: 700; line-height: 1.16; letter-spacing: -.01em; }
 .q-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 40px; margin-top: 44px; }
 .q-opt { width: 100%; min-height: 128px; display: flex; align-items: center; gap: 26px; padding: 18px 34px 18px 22px; border-radius: 4px; border: 3px solid var(--oryn-ink); background: #fff; color: var(--oryn-ink); font: 600 32px/1.3 var(--font); text-align: left; cursor: pointer; transition: background .35s, color .35s, opacity .35s, border-color .35s, transform .2s; }
@@ -867,14 +862,6 @@ input[type="range"] { width: 190px; accent-color: #000; cursor: pointer; }
 .q-why { margin-top: 30px; font-size: 27px; line-height: 1.45; opacity: 0; translate: 0 14px; transition: opacity .5s var(--ease) .2s, translate .6s var(--ease) .2s; }
 .quiz.revealed .q-why { opacity: 1; translate: 0 0; }
 .q-why b { font-weight: 800; }
-.team-strip { position: absolute; left: 0; right: 0; bottom: 0; display: flex; gap: 12px; }
-.tm { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; height: 58px; padding: 0 8px 0 20px; border-radius: 999px; background: var(--oryn-mist); font-size: 18px; font-weight: 600; }
-.tm-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.tm b { font-size: 24px; font-weight: 800; font-variant-numeric: tabular-nums; }
-.tm button { height: 42px; padding: 0 14px; border-radius: 999px; border: 0; background: #000; color: #fff; font: 700 17px var(--font); cursor: pointer; }
-.tm button:hover { background: var(--oryn-steel); }
-.tm.bump { animation: bump .6s var(--ease); }
-@keyframes bump { 30% { scale: 1.08; background: #000; color: #fff; } }
 .q-actions { position: absolute; right: 0; top: 150px; display: flex; flex-direction: column; gap: 10px; }
 
 /* Tie-breaker */
@@ -883,23 +870,6 @@ input[type="range"] { width: 190px; accent-color: #000; cursor: pointer; }
 .tie-n { margin-top: 30px; font-size: 30px; opacity: 0; transition: opacity .5s; }
 .tie-n b { font-size: 120px; font-weight: 800; letter-spacing: -.02em; line-height: 1; vertical-align: -.1em; margin-right: 14px; }
 .tie.revealed .tie-n { opacity: 1; }
-
-/* Podium */
-.podium { position: absolute; left: 120px; bottom: 124px; display: flex; align-items: flex-end; gap: 22px; }
-.pod { width: 330px; opacity: 0; translate: 0 80px; transition: opacity .7s var(--ease), translate .9s var(--ease); }
-.pod .pod-name { font-size: 30px; font-weight: 800; line-height: 1.15; text-transform: uppercase; letter-spacing: -.01em; }
-.pod .pod-score { margin-top: 6px; font-size: 22px; color: var(--oryn-slate); font-weight: 600; }
-.pod .pod-block { margin-top: 18px; border-radius: 4px 4px 0 0; background: var(--oryn-mist); display: flex; align-items: flex-start; padding: 26px 28px; font-size: 110px; font-weight: 800; line-height: .9; letter-spacing: -.03em; }
-.pod[data-rank="1"] .pod-block { height: 430px; background: #000; color: #fff; }
-.pod[data-rank="2"] .pod-block { height: 320px; background: var(--oryn-steel); color: #fff; }
-.pod[data-rank="3"] .pod-block { height: 240px; }
-#s-podium[data-step="1"] .pod[data-rank="3"],
-#s-podium[data-step="2"] .pod[data-rank="3"], #s-podium[data-step="2"] .pod[data-rank="2"],
-#s-podium[data-step="3"] .pod { opacity: 1; translate: 0 0; }
-.pod-rest { position: absolute; right: 120px; bottom: 124px; width: 520px; display: flex; flex-direction: column; gap: 10px; }
-.pod-rest li { display: grid; grid-template-columns: 48px 1fr auto; align-items: center; gap: 12px; height: 60px; padding: 0 22px; border-radius: 4px; background: var(--oryn-mist); font-size: 22px; font-weight: 600; }
-.pod-rest li b { font-weight: 800; }
-canvas.confetti { position: absolute; inset: 0; width: 1920px; height: 1080px; pointer-events: none; z-index: 5; }
 
 /* Cheat sheet */
 .cheat { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 44px; }
@@ -931,15 +901,6 @@ canvas.confetti { position: absolute; inset: 0; width: 1920px; height: 1080px; p
 .help-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 30px; font-size: 15px; }
 .help-grid div { display: flex; justify-content: space-between; gap: 16px; padding: 7px 0; border-bottom: 1px solid var(--oryn-mist); }
 .help-grid kbd { font-size: 13px; }
-.sb-row { display: grid; grid-template-columns: minmax(120px, 220px) 1fr 60px auto; align-items: center; gap: 14px; padding: 8px 0; border-bottom: 1px solid var(--oryn-mist); font-size: 16px; }
-.sb-name { font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.sb-bar { height: 14px; border-radius: 999px; background: var(--oryn-mist); overflow: hidden; }
-.sb-bar span { display: block; height: 100%; background: #000; transition: width .5s var(--ease); }
-.sb-row b { font-size: 22px; font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
-.sb-btns { display: flex; gap: 6px; }
-.sb-btns button, .sb-foot button { height: 34px; padding: 0 12px; border-radius: 999px; border: 2px solid var(--oryn-ink); background: #fff; font: 700 14px var(--font); cursor: pointer; }
-.sb-btns button:hover, .sb-foot button:hover { background: #000; color: #fff; }
-.sb-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; font-size: 13px; color: var(--oryn-slate); }
 #notesDrawer { position: fixed; left: 0; right: 0; bottom: 0; z-index: 1500; max-height: 42vh; overflow: auto; padding: 16px 28px 20px; background: rgba(11,15,20,.96); color: #fff; font: 400 16px/1.6 var(--font); transform: translateY(105%); transition: transform .35s var(--ease); }
 #notesDrawer.open { transform: none; }
 #notesDrawer h5 { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--dark-muted); margin-bottom: 6px; }
@@ -958,7 +919,7 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
 
 /* Print / PDF export: show every animated element in its final state */
 @media print {
-    .rv, .rv-l, .rv-s, .tl-card, .tl-now, .frag, .pod, .chev path { opacity: 1 !important; translate: none !important; animation: none !important; }
+    .rv, .rv-l, .rv-s, .tl-card, .tl-now, .frag, .chev path { opacity: 1 !important; translate: none !important; animation: none !important; }
     .wm-line > span { translate: none !important; animation: none !important; }
     .tl-fill, .cot-fill { scale: 1 1 !important; animation: none !important; }
     .tl-dot { scale: 1 !important; animation: none !important; }
@@ -1067,7 +1028,7 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
   <p class="cover-hint rv" style="--d:10">Press <kbd>→</kbd> to begin · <kbd>?</kbd> for presenter keys</p>
   <aside class="notes">
     <p>Welcome everyone as they settle in. Keep this up during Pendaftaran &amp; Ketibaan Peserta (registration and arrival).</p>
-    <p>Presenter keys: → next, ← back, N notes, P presenter window, M jump menu, S scoreboard, B blackout, F fullscreen.</p>
+    <p>Presenter keys: → next, ← back, N notes, P presenter window, M jump menu, T pause timer, B blackout, F fullscreen.</p>
   </aside>
 </section>
 
@@ -1078,7 +1039,7 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
       <p class="kicker rv">Aturcara program</p>
       <h2 class="h-title rv" style="--d:1">Today's<br>game plan</h2>
       <div class="hatch rv" style="--d:2"></div>
-      <p class="lead rv" style="--d:3">Three modules, one live build and a team quiz with serious bragging rights.</p>
+      <p class="lead rv" style="--d:3">Three modules, one live build and a quiz with serious bragging rights.</p>
       <p class="caption rv" style="--d:4; margin-top: 26px;">All sessions · Bilik Mesyuarat, Kolej Ibu Zain</p>
     </div>
     <ol class="agenda" data-noedit>
@@ -1087,12 +1048,12 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
       <li class="rv-l" style="--d:4" data-go="s-m1"><span class="ic sm num">01</span><span class="ag-t"><b class="ed">Modul 1: Prompting Techniques</b><span class="ed">Get the answer you want on the first try</span></span><svg class="i ag-go"><use href="#i-arrow-right"/></svg></li>
       <li class="rv-l" style="--d:5" data-go="s-m2"><span class="ic sm num">02</span><span class="ag-t"><b class="ed">Modul 2: AI + MCP</b><span class="ed">Make AI use Canva and other apps, live</span></span><svg class="i ag-go"><use href="#i-arrow-right"/></svg></li>
       <li class="rv-l" style="--d:6" data-go="s-m3"><span class="ic sm num">03</span><span class="ag-t"><b class="ed">Modul 3: Token-Saving Techniques</b><span class="ed">Same results, fewer tokens, longer limits</span></span><svg class="i ag-go"><use href="#i-arrow-right"/></svg></li>
-      <li class="rv-l" style="--d:7" data-go="s-quiz"><span class="ic sm"><svg class="i"><use href="#i-trophy"/></svg></span><span class="ag-t"><b class="ed">AI Challenge: Quizzies</b><span class="ed">Teams. Timer. Glory.</span></span><svg class="i ag-go"><use href="#i-arrow-right"/></svg></li>
+      <li class="rv-l" style="--d:7" data-go="s-quiz"><span class="ic sm"><svg class="i"><use href="#i-trophy"/></svg></span><span class="ag-t"><b class="ed">AI Challenge: Quizzies</b><span class="ed">10 questions. 20 seconds. Glory.</span></span><svg class="i ag-go"><use href="#i-arrow-right"/></svg></li>
     </ol>
   </div>
   <aside class="notes">
     <p>Walk through the day in 30 seconds. Click any row to jump straight to that part of the deck.</p>
-    <p>Tell them the quiz at the end is team-based, so they should pay attention now to win later.</p>
+    <p>Tell them there's a quiz at the end, so they should pay attention now to win later.</p>
   </aside>
 </section>
 
@@ -1193,15 +1154,14 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
     <p class="kicker rv">Before we start</p>
     <h2 class="h-title rv" style="--d:1">Phones out. Yes, really.</h2>
     <div class="hatch rv" style="--d:2"></div>
-    <div class="four" style="margin-top: 56px;">
+    <div class="three" style="margin-top: 56px;">
       <div class="card rv" style="--d:3"><span class="ic"><svg class="i"><use href="#i-phone"/></svg></span><h3>Open an AI app</h3><p>ChatGPT, Gemini or Claude. Free plans are fine for everything today.</p></div>
       <div class="card rv" style="--d:4"><span class="ic"><svg class="i"><use href="#i-palette"/></svg></span><h3>Log in to Canva</h3><p>A free or Canva Education account. We'll use it in Modul 2.</p></div>
-      <div class="card rv" style="--d:5"><span class="ic"><svg class="i"><use href="#i-users"/></svg></span><h3>Find a team</h3><p>Groups of 4–5 for the AI Challenge. Pick a name or we'll give you a food one.</p></div>
-      <div class="card black rv" style="--d:6"><span class="ic" style="background:#fff;color:#000"><svg class="i"><use href="#i-shield"/></svg></span><h3>Golden rule</h3><p>Never paste passwords, IC numbers or anyone's private info into an AI.</p></div>
+      <div class="card black rv" style="--d:5"><span class="ic" style="background:#fff;color:#000"><svg class="i"><use href="#i-shield"/></svg></span><h3>Golden rule</h3><p>Never paste passwords, IC numbers or anyone's private info into an AI.</p></div>
     </div>
   </div>
   <aside class="notes">
-    <p>Give them 2 minutes to open an app and log in to Canva. Form teams now so the quiz later starts fast.</p>
+    <p>Give them 2 minutes to open an app and log in to Canva.</p>
   </aside>
 </section>
 
@@ -1488,7 +1448,7 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
         <div class="step rv" style="--d:4"><span class="ic num">R2</span><div><h3>4 min · Use the formula</h3><p>Rewrite it with <b>Persona · Task · Context · Format</b>. Send it again.</p></div></div>
         <div class="step rv" style="--d:5"><span class="ic num">R3</span><div><h3>4 min · Level up</h3><p>Add an <b>example</b>, or tell it to <b>interview you first</b>.</p></div></div>
       </div>
-      <p class="body rv" style="--d:6; margin-top: 34px;"><b>Best glow-up, judged by the room, earns its team +10 in the AI Challenge.</b></p>
+      <p class="body rv" style="--d:6; margin-top: 34px;"><b>Best glow-up, judged by the room, wins bragging rights.</b></p>
     </div>
     <div class="timer rv" style="--d:3" data-timer="10" data-noedit>
       <p class="kicker" style="color: var(--dark-muted);">Lab timer</p>
@@ -1507,7 +1467,7 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
   </div>
   <aside class="notes">
     <p>Run the rounds with the preset buttons (2, 4, 4 minutes) or one 10-minute block. Walk around and look at screens.</p>
-    <p>At the end, ask 2–3 volunteers to read their before/after. Award +10 with the scoreboard (press S).</p>
+    <p>At the end, ask 2–3 volunteers to read their before/after, then let the room pick the best one with a show of hands.</p>
   </aside>
 </section>
 
@@ -2135,10 +2095,11 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
 <!-- =====================================================================
      AI CHALLENGE · QUIZZIES
      Each question slide: a 20 s timer starts on entry. The first → press
-     reveals the answer, the next → moves on. Click +10 on a team to score.
+     reveals the answer, the next → moves on. Click the timer or press T
+     to pause it.
      ===================================================================== -->
 
-<!-- S45 · CHALLENGE INTRO + TEAM SETUP -->
+<!-- S45 · CHALLENGE INTRO -->
 <section class="slide dark divider quiz-intro" id="s-quiz" data-chrome="none" data-menu="AI Challenge · Quizzies" aria-label="AI Challenge: Quizzies">
   <div class="chev-field div-chev" data-chevrons="3,4,5" data-size="30" data-gx="50" data-gy="48" aria-hidden="true" style="right: auto; left: 120px; top: auto; bottom: 90px;"></div>
   <div class="div-main">
@@ -2147,19 +2108,14 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
     <div class="hatch rv" style="--d:3"></div>
     <ul class="qrules">
       <li class="rv" style="--d:4"><span class="ic"><svg class="i"><use href="#i-clock"/></svg></span><span class="ed">10 questions · 20 seconds each</span></li>
-      <li class="rv" style="--d:5"><span class="ic"><svg class="i"><use href="#i-check"/></svg></span><span class="ed">+10 points for every correct team</span></li>
-      <li class="rv" style="--d:6"><span class="ic"><svg class="i"><use href="#i-zap"/></svg></span><span class="ed">+5 bonus for the fastest correct answer</span></li>
+      <li class="rv" style="--d:5"><span class="ic"><svg class="i"><use href="#i-hash"/></svg></span><span class="ed">Answer on paper or hold up 1–4 fingers for A–D</span></li>
+      <li class="rv" style="--d:6"><span class="ic"><svg class="i"><use href="#i-check"/></svg></span><span class="ed">Keep count of your own correct answers</span></li>
       <li class="rv" style="--d:7"><span class="ic"><svg class="i"><use href="#i-trophy"/></svg></span><span class="ed">Presenter's decision is final (teh tarik bribes considered)</span></li>
     </ul>
   </div>
-  <div class="team-setup rv" style="--d:4" data-noedit>
-    <div class="ts-head"><span class="kicker">Teams</span><span class="ts-count"><button type="button" data-teams="-1" aria-label="Fewer teams">−</button><b id="teamCount">6</b><button type="button" data-teams="1" aria-label="More teams">+</button></span></div>
-    <div id="teamSetup"></div>
-    <p class="caption" style="margin-top: 18px;">Click a name to rename it. During questions, tap +10 on a team. Press <kbd style="background:#000;color:#fff;border-color:#333">S</kbd> for the full scoreboard.</p>
-  </div>
   <aside class="notes">
-    <p>Set the number of teams and rename them (click a name, type, press Esc). Scores are saved in this browser, so reset them in the scoreboard (S) before you start if you rehearsed.</p>
-    <p>Students answer on paper or by holding up A/B/C/D fingers. If you're running it on Quizizz instead, still use these slides to show the answers.</p>
+    <p>Each question starts a 20-second timer. Click the timer or press T to pause it if the room needs a moment. The first → reveals the answer, the next moves on.</p>
+    <p>If you're running it on Quizizz instead, still use these slides to show the answers.</p>
   </aside>
 </section>
 
@@ -2175,7 +2131,6 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
       <li><button class="q-opt" type="button"><span class="q-l">D</span><span class="q-t">Format</span><svg class="i q-check"><use href="#i-check"/></svg></button></li>
     </ol>
     <p class="q-why"><b>Task.</b> The verb is what you want done; persona, context and format make it better.</p>
-    <div class="team-strip" data-noedit></div>
   </div>
   <aside class="notes"><p>Answer: B, Task.</p></aside>
 </section>
@@ -2192,7 +2147,6 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
       <li><button class="q-opt" type="button"><span class="q-l">D</span><span class="q-t">99.9%</span><svg class="i q-check"><use href="#i-check"/></svg></button></li>
     </ol>
     <p class="q-why"><b>78.7%.</b> Five words, +61 points (Kojima et al., 2022).</p>
-    <div class="team-strip" data-noedit></div>
   </div>
   <aside class="notes"><p>Answer: C, 78.7%.</p></aside>
 </section>
@@ -2209,7 +2163,6 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
       <li><button class="q-opt" type="button"><span class="q-l">D</span><span class="q-t">Wrap the notes in tags like &lt;notes&gt;…&lt;/notes&gt;</span><svg class="i q-check"><use href="#i-check"/></svg></button></li>
     </ol>
     <p class="q-why"><b>Tags.</b> Labelling your content keeps it separate from your instructions.</p>
-    <div class="team-strip" data-noedit></div>
   </div>
   <aside class="notes"><p>Answer: D, tags.</p></aside>
 </section>
@@ -2226,7 +2179,6 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
       <li><button class="q-opt" type="button"><span class="q-l">D</span><span class="q-t">Trust it if it sounds confident</span><svg class="i q-check"><use href="#i-check"/></svg></button></li>
     </ol>
     <p class="q-why"><b>Verify it.</b> Made-up facts and sources are called hallucinations.</p>
-    <div class="team-strip" data-noedit></div>
   </div>
   <aside class="notes"><p>Answer: A, verify.</p></aside>
 </section>
@@ -2243,7 +2195,6 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
       <li><button class="q-opt" type="button"><span class="q-l">D</span><span class="q-t">Model Compute Processor</span><svg class="i q-check"><use href="#i-check"/></svg></button></li>
     </ol>
     <p class="q-why"><b>Model Context Protocol</b>, the open standard released by Anthropic in November 2024.</p>
-    <div class="team-strip" data-noedit></div>
   </div>
   <aside class="notes"><p>Answer: C, Model Context Protocol.</p></aside>
 </section>
@@ -2260,7 +2211,6 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
       <li><button class="q-opt" type="button"><span class="q-l">D</span><span class="q-t">USB-C port</span><svg class="i q-check"><use href="#i-check"/></svg></button></li>
     </ol>
     <p class="q-why"><b>USB-C port.</b> One standard plug, lots of devices.</p>
-    <div class="team-strip" data-noedit></div>
   </div>
   <aside class="notes"><p>Answer: D, USB-C port.</p></aside>
 </section>
@@ -2277,7 +2227,6 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
       <li><button class="q-opt" type="button"><span class="q-l">D</span><span class="q-t">Both only work offline</span><svg class="i q-check"><use href="#i-check"/></svg></button></li>
     </ol>
     <p class="q-why"><b>MCP = hands, Skills = know-how.</b></p>
-    <div class="team-strip" data-noedit></div>
   </div>
   <aside class="notes"><p>Answer: A.</p></aside>
 </section>
@@ -2294,7 +2243,6 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
       <li><button class="q-opt" type="button"><span class="q-l">D</span><span class="q-t">50</span><svg class="i q-check"><use href="#i-check"/></svg></button></li>
     </ol>
     <p class="q-why"><b>About 4 characters</b>, roughly ¾ of an English word.</p>
-    <div class="team-strip" data-noedit></div>
   </div>
   <aside class="notes"><p>Answer: B, 4.</p></aside>
 </section>
@@ -2311,7 +2259,6 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
       <li><button class="q-opt" type="button"><span class="q-l">D</span><span class="q-t">They don't. Length doesn't matter</span><svg class="i q-check"><use href="#i-check"/></svg></button></li>
     </ol>
     <p class="q-why"><b>The whole history rides along</b>, so new topic, new chat.</p>
-    <div class="team-strip" data-noedit></div>
   </div>
   <aside class="notes"><p>Answer: C, the whole chat is re-sent.</p></aside>
 </section>
@@ -2328,45 +2275,28 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
       <li><button class="q-opt" type="button"><span class="q-l">D</span><span class="q-t">5× the price of</span><svg class="i q-check"><use href="#i-check"/></svg></button></li>
     </ol>
     <p class="q-why"><b>5×.</b> That's why "keep it short" saves real money.</p>
-    <div class="team-strip" data-noedit></div>
   </div>
   <aside class="notes"><p>Answer: D, 5×.</p></aside>
 </section>
 
-<!-- S56 · TIE-BREAKER (live tokenizer reveal) -->
-<section class="slide tie" id="s-tie" data-head="AI Challenge · Tie-breaker" aria-label="Tie-breaker">
+<!-- S56 · BONUS ROUND (live tokenizer reveal) -->
+<section class="slide tie" id="s-tie" data-head="AI Challenge · Bonus round" aria-label="Bonus round">
   <div class="wrap">
-    <p class="kicker rv">Tie-breaker · closest guess wins +10</p>
+    <p class="kicker rv">Bonus round · closest guess wins</p>
     <h2 class="h-title rv" style="--d:1">How many tokens is this word?</h2>
     <p class="tie-word rv" style="--d:2" data-noedit>supercalifragilisticexpialidocious</p>
     <p class="body muted rv" style="--d:3; margin-top: 16px;">(Yes, the Mary Poppins word.) Tokenizer: OpenAI o200k. Write your number down, then press → to reveal.</p>
     <div class="tie-out" data-noedit></div>
     <p class="tie-n" data-noedit><b>0</b>tokens</p>
-    <div class="team-strip" data-noedit></div>
   </div>
-  <aside class="notes"><p>Use only if two teams are tied. Press → to reveal the live count and the split.</p></aside>
-</section>
-
-<!-- S57 · LEADERBOARD / PODIUM -->
-<section class="slide" id="s-podium" data-head="AI Challenge · Results" aria-label="And the champions are">
-  <div class="wrap">
-    <p class="kicker rv">Final results · press → to reveal</p>
-    <h2 class="h-title rv" style="--d:1">And the champions are…</h2>
-  </div>
-  <div class="podium" data-noedit>
-    <div class="pod" data-rank="2"><p class="pod-name">—</p><p class="pod-score"></p><div class="pod-block">2</div></div>
-    <div class="pod" data-rank="1"><p class="pod-name">—</p><p class="pod-score"></p><div class="pod-block">1</div></div>
-    <div class="pod" data-rank="3"><p class="pod-name">—</p><p class="pod-score"></p><div class="pod-block">3</div></div>
-  </div>
-  <ol class="pod-rest" data-noedit></ol>
-  <aside class="notes"><p>Press → three times: 3rd, 2nd, then the winner with confetti. Hand out prizes. The podium reads live from the scoreboard.</p></aside>
+  <aside class="notes"><p>Everyone writes a number down first. Press → to reveal the live count and the split. Ask who got 10/10 on the quiz, then who guessed closest here.</p></aside>
 </section>
 
 <!-- =====================================================================
      PENUTUP (CLOSING)
      ===================================================================== -->
 
-<!-- S58 · CHEAT SHEET -->
+<!-- S57 · CHEAT SHEET -->
 <section class="slide" id="s-cheat" data-head="AI-IZ · Penutup" data-menu="Penutup" aria-label="Your AI cheat sheet">
   <div class="wrap">
     <p class="kicker rv">Screenshot this</p>
@@ -2410,7 +2340,7 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
   <aside class="notes"><p>Give people 30 seconds to take a photo of this slide.</p></aside>
 </section>
 
-<!-- S59 · CLOSING (curve returns: title surfaces only) -->
+<!-- S58 · CLOSING (curve returns: title surfaces only) -->
 <section class="slide cover closing" id="s-end" data-chrome="none" aria-label="Terima kasih">
   <div class="curve-wrap" aria-hidden="true"><div class="curve"></div></div>
   <div class="chev-field" data-chevrons="5,6,7" aria-hidden="true"></div>
@@ -2454,7 +2384,7 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
       <div><span>Jump menu</span><kbd>M</kbd></div>
       <div><span>Speaker notes</span><kbd>N</kbd></div>
       <div><span>Presenter window</span><kbd>P</kbd></div>
-      <div><span>Quiz scoreboard</span><kbd>S</kbd></div>
+      <div><span>Pause / resume timer</span><kbd>T</kbd></div>
       <div><span>Blackout screen</span><span><kbd>B</kbd> <kbd>.</kbd></span></div>
       <div><span>Fullscreen</span><kbd>F</kbd></div>
       <div><span>Sound on/off</span><kbd>A</kbd></div>
@@ -2462,14 +2392,6 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
       <div><span>Save a copy (while editing)</span><kbd>Ctrl S</kbd></div>
       <div><span>First / last slide</span><span><kbd>Home</kbd> <kbd>End</kbd></span></div>
     </div>
-  </div>
-</div>
-
-<div class="overlay" id="scoreOverlay" role="dialog" aria-label="Scoreboard">
-  <div class="ov-panel" style="width: min(900px, 92vw);">
-    <div class="ov-head"><b>Scoreboard</b><span>S or Esc to close</span></div>
-    <div id="scoreList"></div>
-    <div class="sb-foot"><span>Scores are saved in this browser.</span><button type="button" id="scoreReset">Reset all scores</button></div>
   </div>
 </div>
 
@@ -2481,7 +2403,7 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
 /* =====================================================================
    AI-IZ: DECK RUNTIME
    Sections: 0 snapshot · 1 helpers · 2 editor · 3 deck · 4 sound ·
-   5 tokenizer · 6 widgets · 7 teams + quiz · 8 overlays + presenter · 9 boot
+   5 tokenizer · 6 widgets · 7 quiz · 8 overlays + presenter · 9 boot
    ===================================================================== */
 (function () {
 'use strict';
@@ -3278,105 +3200,13 @@ function initTie() {
     });
 }
 
-/* Monochrome confetti: squares, dots and chevrons */
-function confetti(slide) {
-    if (REDUCED) return;
-    let cv = $('canvas.confetti', slide);
-    if (!cv) { cv = document.createElement('canvas'); cv.className = 'confetti'; cv.width = 1920; cv.height = 1080; slide.appendChild(cv); }
-    const ctx = cv.getContext('2d');
-    const COLS = ['#000000', '#3A4450', '#5C6672', '#C9CFD6', '#101A28'];
-    const P = Array.from({ length: 180 }, () => ({
-        x: 700 + Math.random() * 520, y: 360 + Math.random() * 160,
-        vx: (Math.random() - .5) * 28, vy: -Math.random() * 26 - 8,
-        g: .55 + Math.random() * .25, r: Math.random() * 6.28, vr: (Math.random() - .5) * .3,
-        s: 12 + Math.random() * 16, c: COLS[Math.floor(Math.random() * COLS.length)], k: Math.floor(Math.random() * 3)
-    }));
-    const t0 = performance.now();
-    cancelAnimationFrame(cv._raf);
-    const frame = now => {
-        const t = now - t0;
-        ctx.clearRect(0, 0, 1920, 1080);
-        P.forEach(p => {
-            p.vy += p.g; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
-            ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r);
-            ctx.globalAlpha = Math.max(0, 1 - t / 4600);
-            if (p.k === 0) { ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 3, p.s, p.s * .66); }
-            else if (p.k === 1) { ctx.fillStyle = p.c; ctx.beginPath(); ctx.arc(0, 0, p.s / 2.6, 0, 6.283); ctx.fill(); }
-            else { ctx.strokeStyle = p.c; ctx.lineWidth = 4; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(-p.s / 3, -p.s / 2); ctx.lineTo(p.s / 3, 0); ctx.lineTo(-p.s / 3, p.s / 2); ctx.stroke(); }
-            ctx.restore();
-        });
-        if (t < 4800) cv._raf = requestAnimationFrame(frame); else ctx.clearRect(0, 0, 1920, 1080);
-    };
-    cv._raf = requestAnimationFrame(frame);
-}
-
-/* === 7. TEAMS + QUIZ === */
-const Teams = {
-    DEFAULTS: ['Sambal', 'Teh Tarik', 'Roti Canai', 'Kopi O', 'Cendol', 'Satay', 'Nasi Kerabu', 'Laksa'],
-    list: [],
-    init() {
-        const saved = store.get('aiz-teams', null);
-        this.list = Array.isArray(saved) && saved.length ? saved : this.DEFAULTS.slice(0, 6).map(n => ({ name: 'Team ' + n, score: 0 }));
-        this.render();
-        document.addEventListener('click', e => {
-            const b = e.target.closest('[data-add]');
-            if (b) { const row = b.closest('[data-i]'); if (row) this.add(+row.dataset.i, +b.dataset.add); return; }
-            const c = e.target.closest('[data-teams]');
-            if (c) this.setCount(this.list.length + +c.dataset.teams);
-        });
-        document.addEventListener('input', e => {
-            const inp = e.target.closest && e.target.closest('[data-team]');
-            if (!inp) return;
-            const k = +inp.dataset.team;
-            this.list[k].name = inp.value.trim() || ('Team ' + (k + 1));
-            this.persist();
-            $$(`.tm[data-i="${k}"] .tm-name`).forEach(el => { el.textContent = this.list[k].name; });
-            this.renderBoard();
-        });
-        $('#scoreReset').addEventListener('click', () => {
-            if (window.confirm('Reset every team to 0 points?')) { this.list.forEach(t => { t.score = 0; }); this.persist(); this.render(); }
-        });
-    },
-    persist() { store.set('aiz-teams', this.list); },
-    add(k, d) {
-        const t = this.list[k];
-        if (!t) return;
-        t.score = Math.max(0, t.score + d);
-        this.persist(); this.render();
-        $$(`.tm[data-i="${k}"]`).forEach(el => { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); });
-        if (d > 0) Sound.tick();
-    },
-    setCount(n) {
-        n = clamp(n, 2, 8);
-        while (this.list.length < n) this.list.push({ name: 'Team ' + (this.DEFAULTS[this.list.length] || (this.list.length + 1)), score: 0 });
-        this.list.length = n;
-        this.persist(); this.render(true);
-    },
-    render(forceSetup) {
-        const strip = this.list.map((t, k) => `<div class="tm" data-i="${k}"><span class="tm-name">${esc(t.name)}</span><b>${t.score}</b><button type="button" data-add="10" aria-label="Add 10 points to ${esc(t.name)}">+10</button></div>`).join('');
-        $$('.team-strip').forEach(el => { el.innerHTML = strip; });
-        const box = $('#teamSetup');
-        if (box && (forceSetup || !box.contains(document.activeElement))) {
-            box.innerHTML = this.list.map((t, k) => `<label class="ts-row"><span>${k + 1}</span><input type="text" value="${esc(t.name)}" data-team="${k}" maxlength="24" aria-label="Team ${k + 1} name"></label>`).join('');
-        }
-        const cnt = $('#teamCount');
-        if (cnt) cnt.textContent = this.list.length;
-        this.renderBoard();
-    },
-    renderBoard() {
-        const b = $('#scoreList');
-        if (!b) return;
-        const max = Math.max.apply(null, [1].concat(this.list.map(t => t.score)));
-        b.innerHTML = this.list.map((t, k) => `<div class="sb-row" data-i="${k}"><span class="sb-name">${esc(t.name)}</span><span class="sb-bar"><span style="width:${t.score / max * 100}%"></span></span><b>${t.score}</b><span class="sb-btns"><button type="button" data-add="-5">−5</button><button type="button" data-add="5">+5</button><button type="button" data-add="10">+10</button></span></div>`).join('');
-    }
-};
-
+/* === 7. QUIZ === */
 function initQuiz() {
     $$('.slide.quiz').forEach(s => {
         const ans = +s.dataset.answer, dur = +(s.dataset.time || 20);
         const opts = $$('.q-opt', s), ring = $('.q-ring', s), sec = $('.q-sec', s), timer = $('.q-timer', s);
         const C = 2 * Math.PI * 70;
-        let raf = 0, t0 = 0, revealed = false, lastSec = dur;
+        let raf = 0, t0 = 0, revealed = false, lastSec = dur, pausedAt = 0;
         const draw = left => {
             sec.textContent = left > 0 ? Math.ceil(left) : 'TIME';
             ring.style.strokeDashoffset = (C * (1 - left / dur)).toFixed(2);
@@ -3389,15 +3219,26 @@ function initQuiz() {
             draw(left);
             if (left > 0 && !revealed) raf = requestAnimationFrame(loop);
         };
-        const start = () => { cancelAnimationFrame(raf); t0 = performance.now(); lastSec = dur; draw(dur); raf = requestAnimationFrame(loop); };
+        const setPaused = on => { pausedAt = on ? performance.now() : 0; timer.classList.toggle('paused', on); };
+        const start = () => { cancelAnimationFrame(raf); setPaused(false); t0 = performance.now(); lastSec = dur; draw(dur); raf = requestAnimationFrame(loop); };
+        /* Freeze the countdown where it is; resuming shifts the start time by the pause */
+        const togglePause = () => {
+            if (revealed || timer.classList.contains('done')) return;
+            if (pausedAt) { t0 += performance.now() - pausedAt; setPaused(false); raf = requestAnimationFrame(loop); }
+            else { cancelAnimationFrame(raf); setPaused(true); }
+        };
         const reveal = () => {
             if (revealed) return;
-            revealed = true; cancelAnimationFrame(raf);
+            revealed = true; cancelAnimationFrame(raf); setPaused(false);
             s.classList.add('revealed');
             opts.forEach((o, k) => o.classList.toggle('correct', k === ans));
             Sound.win();
         };
         opts.forEach(o => o.addEventListener('click', reveal));
+        timer.setAttribute('role', 'button');
+        timer.setAttribute('aria-label', 'Pause or resume the timer (T)');
+        timer.addEventListener('click', togglePause);
+        s._pauseTimer = togglePause;
         Deck.on(s.id, {
             enter: () => { if (!revealed) start(); },
             leave: () => cancelAnimationFrame(raf),
@@ -3406,27 +3247,12 @@ function initQuiz() {
     });
 }
 
-function initPodium() {
-    const s = $('#s-podium');
-    if (!s) return;
-    let step = 0;
-    const build = () => {
-        const sorted = Teams.list.map((t, k) => ({ name: t.name, score: t.score, k })).sort((a, b) => b.score - a.score);
-        [1, 2, 3].forEach(r => {
-            const el = $(`.pod[data-rank="${r}"]`, s), t = sorted[r - 1];
-            $('.pod-name', el).textContent = t ? t.name : '—';
-            $('.pod-score', el).textContent = t ? t.score + ' points' : '';
-        });
-        $('.pod-rest', s).innerHTML = sorted.slice(3).map((t, k) => `<li><span>${k + 4}</span>${esc(t.name)}<b>${t.score}</b></li>`).join('');
-    };
-    const apply = () => { s.dataset.step = step; };
-    Deck.on('s-podium', {
-        enter: (sl, opt) => { build(); step = opt && opt.back ? 3 : 0; apply(); },
-        next: () => {
-            if (step < 3) { step++; apply(); if (step === 3) { Sound.win(); confetti(s); } else Sound.tick(); return true; }
-            return false;
-        }
-    });
+/* T: pause or resume the timer on the current slide (quiz ring or lab timer) */
+function toggleTimer() {
+    const s = Deck.slides[Deck.i];
+    if (s._pauseTimer) { s._pauseTimer(); return; }
+    const b = $('[data-timer] [data-t="toggle"]', s);
+    if (b) b.click();
 }
 
 /* === 8. OVERLAYS + PRESENTER VIEW === */
@@ -3446,8 +3272,8 @@ button{margin-right:8px;height:40px;padding:0 18px;border-radius:999px;border:2p
 <div class="top"><span id="pNum"></span><span id="pClock">00:00</span></div>
 <h1 id="pTitle"></h1><div id="pNotes"></div>
 <p class="next">Next: <b id="pNext"></b></p>
-<p><button id="pPrev">← Back</button><button id="pFwd">Next →</button></p>
-<p class="keys">→ / Space next · ← back · B blackout · this window controls the main deck</p>
+<p><button id="pPrev">← Back</button><button id="pFwd">Next →</button><button id="pTimer">Pause / resume timer</button></p>
+<p class="keys">→ / Space next · ← back · T pause timer · B blackout · this window controls the main deck</p>
 <script>
 (function(){
 var t0=Date.now();
@@ -3455,9 +3281,11 @@ setInterval(function(){var s=Math.floor((Date.now()-t0)/1000);document.getElemen
 function D(){return window.opener&&window.opener.AIZ;}
 document.getElementById('pPrev').onclick=function(){var a=D();if(a)a.Deck.prev();};
 document.getElementById('pFwd').onclick=function(){var a=D();if(a)a.Deck.next();};
+document.getElementById('pTimer').onclick=function(){var a=D();if(a)a.toggleTimer();};
 document.addEventListener('keydown',function(e){var a=D();if(!a)return;
 if(['ArrowRight','PageDown',' ','Enter'].indexOf(e.key)>-1){e.preventDefault();a.Deck.next();}
 else if(['ArrowLeft','PageUp'].indexOf(e.key)>-1){e.preventDefault();a.Deck.prev();}
+else if(e.key==='t'||e.key==='T'){a.toggleTimer();}
 else if(e.key==='b'||e.key==='B'||e.key==='.'){a.Overlays.blackout();}});
 })();
 <\/script></body></html>`;
@@ -3496,7 +3324,6 @@ const Overlays = {
         if (willOpen) {
             el.classList.add('open'); this.open = id;
             if (id === 'menuOverlay') this.buildMenu();
-            if (id === 'scoreOverlay') Teams.renderBoard();
         }
     },
     closeAll() { $$('.overlay.open').forEach(o => o.classList.remove('open')); this.open = null; },
@@ -3514,11 +3341,12 @@ const Overlays = {
             if ($('#notesDrawer').classList.contains('open')) { $('#notesDrawer').classList.remove('open'); return true; }
             return false;
         }
-        const map = { m: 'menuOverlay', s: 'scoreOverlay', '?': 'helpOverlay', h: 'helpOverlay' };
+        const map = { m: 'menuOverlay', '?': 'helpOverlay', h: 'helpOverlay' };
         const key = k.length === 1 ? k.toLowerCase() : k;
         if (map[key]) { this.toggle(map[key]); return true; }
         if (key === 'n') { $('#notesDrawer').classList.toggle('open'); this.sync(); return true; }
         if (key === 'p') { Presenter.open(); return true; }
+        if (key === 't') { toggleTimer(); return true; }
         if (key === 'b' || key === '.') { this.blackout(); return true; }
         if (key === 'a') { Sound.toggle(); return true; }
         if (key === 'e') { Editor.toggle(); return true; }
@@ -3571,9 +3399,7 @@ initGuess();
 initCtx();
 initLean();
 initTie();
-Teams.init();
 initQuiz();
-initPodium();
 applyBinds(document);
 $$('[data-bind="total"]').forEach(el => { el.textContent = Deck.total; });
 
@@ -3591,7 +3417,7 @@ Deck.start();
 /* Fetch the tokenizer in the background so Modul 3 is instant */
 setTimeout(() => TOK.load(), 1500);
 
-window.AIZ = { Deck, Overlays, Teams, TOK, Editor };
+window.AIZ = { Deck, Overlays, TOK, Editor, toggleTimer };
 })();
 </script>
 </body>

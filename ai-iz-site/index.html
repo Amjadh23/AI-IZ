@@ -344,7 +344,7 @@ b, strong { font-weight: 700; }
 .t-row .r { float: right; color: var(--dark-muted); }
 .term-caret { display: inline-block; width: .6em; height: 1.1em; background: #E6E9ED; vertical-align: -.2em; margin-left: 2px; animation: blink 1s steps(1) infinite; }
 
-/* Token chips (shared by tokenizer, guess cards, tie-breaker) */
+/* Token chips (shared by tokenizer and guess cards) */
 .tk { display: inline-block; padding: 5px 9px; border-radius: 4px; line-height: 1.25; white-space: pre; font-family: var(--mono); color: var(--oryn-ink); }
 .tk.t0 { background: #E4E8ED; }
 .tk.t1 { background: #C9CFD6; }
@@ -884,13 +884,6 @@ input[type="range"] { width: 190px; accent-color: #000; cursor: pointer; }
 .q-live .dot { width: 12px; height: 12px; border-radius: 50%; background: #000; animation: blink 1.2s steps(1) infinite; }
 .q-live.closed .dot { animation: none; opacity: .3; }
 .q-actions { position: absolute; right: 0; top: 150px; display: flex; flex-direction: column; gap: 10px; }
-
-/* Tie-breaker */
-.tie-word { margin-top: 30px; font-size: 76px; font-weight: 800; letter-spacing: -.02em; line-height: 1; word-break: break-all; }
-.tie-out { margin-top: 44px; display: flex; flex-wrap: wrap; gap: 10px; font-size: 40px; min-height: 70px; }
-.tie-n { margin-top: 30px; font-size: 30px; opacity: 0; transition: opacity .5s; }
-.tie-n b { font-size: 120px; font-weight: 800; letter-spacing: -.02em; line-height: 1; vertical-align: -.1em; margin-right: 14px; }
-.tie.revealed .tie-n { opacity: 1; }
 
 /* Podium */
 .podium { position: absolute; left: 120px; bottom: 124px; display: flex; align-items: flex-end; gap: 22px; }
@@ -2147,7 +2140,7 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
     <h2 class="div-title"><span class="wm-line"><span style="--d:1">Quizzies</span></span></h2>
     <div class="hatch rv" style="--d:3"></div>
     <ul class="qrules">
-      <li class="rv" style="--d:4"><span class="ic"><svg class="i"><use href="#i-clock"/></svg></span><span class="ed">10 questions · 20 seconds each</span></li>
+      <li class="rv" style="--d:4"><span class="ic"><svg class="i"><use href="#i-clock"/></svg></span><span class="ed">10 questions + a bonus · 20 seconds each</span></li>
       <li class="rv" style="--d:5"><span class="ic"><svg class="i"><use href="#i-phone"/></svg></span><span class="ed">Scan the QR code and enter your name</span></li>
       <li class="rv" style="--d:6"><span class="ic"><svg class="i"><use href="#i-zap"/></svg></span><span class="ed">Right answers score 500–1,000. Faster scores more</span></li>
       <li class="rv" style="--d:7"><span class="ic"><svg class="i"><use href="#i-trophy"/></svg></span><span class="ed">Presenter's decision is final (teh tarik bribes considered)</span></li>
@@ -2339,17 +2332,20 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
   <aside class="notes"><p>Answer: D, 5×.</p></aside>
 </section>
 
-<!-- S56 · BONUS ROUND (live tokenizer reveal) -->
-<section class="slide tie" id="s-tie" data-head="AI Challenge · Bonus round" aria-label="Bonus round">
+<!-- S56 · BONUS QUESTION (Q11) -->
+<section class="slide quiz" id="s-q11" data-answer="2" data-time="20" data-head="AI Challenge · Bonus question" aria-label="Bonus question">
   <div class="wrap">
-    <p class="kicker rv">Bonus round · closest guess wins</p>
-    <h2 class="h-title rv" style="--d:1">How many tokens is this word?</h2>
-    <p class="tie-word rv" style="--d:2" data-noedit>supercalifragilisticexpialidocious</p>
-    <p class="body muted rv" style="--d:3; margin-top: 16px;">(Yes, the Mary Poppins word.) Tokenizer: OpenAI o200k. Write your number down, then press → to reveal.</p>
-    <div class="tie-out" data-noedit></div>
-    <p class="tie-n" data-noedit><b>0</b>tokens</p>
+    <div class="q-top"><p class="kicker">Bonus question · Modul 3</p><div class="q-timer"><svg viewBox="0 0 160 160"><circle class="q-track" cx="80" cy="80" r="70"/><circle class="q-ring" cx="80" cy="80" r="70"/></svg><span class="q-sec">20</span></div></div>
+    <h2 class="q-text">How many tokens is "supercalifragilisticexpialidocious" in OpenAI's tokenizer?</h2>
+    <ol class="q-opts" data-noedit>
+      <li><button class="q-opt" type="button"><span class="q-l">A</span><span class="q-t">1</span><svg class="i q-check"><use href="#i-check"/></svg></button></li>
+      <li><button class="q-opt" type="button"><span class="q-l">B</span><span class="q-t">5</span><svg class="i q-check"><use href="#i-check"/></svg></button></li>
+      <li><button class="q-opt" type="button"><span class="q-l">C</span><span class="q-t">10</span><svg class="i q-check"><use href="#i-check"/></svg></button></li>
+      <li><button class="q-opt" type="button"><span class="q-l">D</span><span class="q-t">34</span><svg class="i q-check"><use href="#i-check"/></svg></button></li>
+    </ol>
+    <p class="q-why"><b>10 tokens:</b> super · cal · if · rag · il · istic · exp · ial · id · ocious. Rare words get chopped into pieces.</p>
   </div>
-  <aside class="notes"><p>Everyone writes a number down first. Press → to reveal the live count and the split. Ask who got 10/10 on the quiz, then who guessed closest here.</p></aside>
+  <aside class="notes"><p>Answer: C, 10 (OpenAI o200k). Scored like the other questions, then on to the champions.</p></aside>
 </section>
 
 <!-- S57 · CHAMPIONS (live leaderboard) -->
@@ -3260,24 +3256,6 @@ function initLean() {
     calc();
 }
 
-/* Tie-breaker reveal */
-function initTie() {
-    const s = $('#s-tie');
-    if (!s) return;
-    const word = $('.tie-word', s).textContent.trim();
-    let revealed = false;
-    const reveal = () => {
-        revealed = true;
-        $('.tie-out', s).innerHTML = chips(TOK.pieces(word));
-        $('.tie-n b', s).textContent = TOK.count(word);
-        s.classList.add('revealed'); Sound.win();
-    };
-    Deck.on('s-tie', {
-        enter: (sl, opt) => { revealed = false; s.classList.remove('revealed'); $('.tie-out', s).innerHTML = ''; if (opt && opt.back) reveal(); },
-        next: () => { if (!revealed) { reveal(); return true; } return false; }
-    });
-}
-
 /* Monochrome confetti: squares, dots and chevrons */
 function confetti(slide) {
     if (REDUCED) return;
@@ -3684,7 +3662,6 @@ initTokLab();
 initGuess();
 initCtx();
 initLean();
-initTie();
 Live.init();
 initQuiz();
 initPodium();

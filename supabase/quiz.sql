@@ -82,7 +82,8 @@ insert into quiz_questions (q, prompt, options, seconds) values
   (7, 'Which statement about Skills and MCP is correct?', '["MCP gives AI access to tools; Skills teach it how to do a job", "Skills connect AI to apps; MCP is a recipe file", "They are exactly the same thing", "Both only work offline"]'::jsonb, 20),
   (8, 'Roughly how many characters of English make up one token?', '["1", "4", "10", "50"]'::jsonb, 20),
   (9, 'Why do very long chats use up your limit faster?', '["The AI gets tired", "Long chats switch to a pricier model", "The whole chat is re-sent with every new message", "They don''t. Length doesn''t matter"]'::jsonb, 20),
-  (10, 'On Claude''s API, output tokens cost ___ input tokens.', '["the same as", "half the price of", "2× the price of", "5× the price of"]'::jsonb, 20)
+  (10, 'On Claude''s API, output tokens cost ___ input tokens.', '["the same as", "half the price of", "2× the price of", "5× the price of"]'::jsonb, 20),
+  (11, 'How many tokens is "supercalifragilisticexpialidocious" in OpenAI''s tokenizer?', '["1", "5", "10", "34"]'::jsonb, 20)
 on conflict (q) do update set prompt = excluded.prompt, options = excluded.options, seconds = excluded.seconds;
 
 insert into quiz_key (q, answer, explain) values
@@ -95,7 +96,8 @@ insert into quiz_key (q, answer, explain) values
   (7, 0, 'MCP = hands, Skills = know-how.'),
   (8, 1, 'About 4 characters, roughly ¾ of an English word.'),
   (9, 2, 'The whole history rides along, so new topic, new chat.'),
-  (10, 3, '5×. That''s why "keep it short" saves real money.')
+  (10, 3, '5×. That''s why "keep it short" saves real money.'),
+  (11, 2, '10 tokens: super · cal · if · rag · il · istic · exp · ial · id · ocious. Rare words get chopped into pieces.')
 on conflict (q) do update set answer = excluded.answer, explain = excluded.explain;
 
 -- ---------------------------------------------------------------------

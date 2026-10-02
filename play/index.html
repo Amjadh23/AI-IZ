@@ -145,6 +145,7 @@ const store = {
     set(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) { /* private mode */ } },
     clear() { try { localStorage.removeItem(KEY); } catch (e) { /* private mode */ } }
 };
+const qLabel = n => n > 10 ? 'Bonus question' : 'Question ' + n + ' of 10';
 const fmt = n => Number(n || 0).toLocaleString('en-MY');
 const ord = n => { const v = n % 100; return n + (['th', 'st', 'nd', 'rd'][(v - 20) % 10] || ['th', 'st', 'nd', 'rd'][v] || 'th'); };
 
@@ -216,7 +217,7 @@ async function myStatus() {
 }
 
 async function render() {
-    const st = state, qn = st.q, label = qn ? 'Question ' + qn + ' of 10' : '';
+    const st = state, qn = st.q, label = qn ? qLabel(qn) : '';
     if (st.phase === 'lobby' || !qn) {
         $('#waitKicker').textContent = "You're in";
         $('#waitTitle').textContent = 'Hi, ' + me.name + '!';
@@ -301,8 +302,8 @@ async function answer(qn, choice, btn) {
         btn.classList.remove('pick'); box.classList.remove('sent');
         return toast("Didn't send. Tap again.");
     }
-    if (data === 'ok' || data === 'duplicate') return showLocked('Question ' + qn + ' of 10', choice, state && state.phase !== 'open');
-    if (data === 'closed') { $('#cNum').textContent = 'Question ' + qn + ' of 10'; return show('s-closed'); }
+    if (data === 'ok' || data === 'duplicate') return showLocked(qLabel(qn), choice, state && state.phase !== 'open');
+    if (data === 'closed') { $('#cNum').textContent = qLabel(qn); return show('s-closed'); }
     if (data === 'rejoin') { shownKey = ''; return askName('A new game has started. Join again.'); }
     if (data === 'removed') { shownKey = ''; return askName('The presenter removed that name. Join again with your real name.'); }
 }

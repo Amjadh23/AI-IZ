@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>AI-IZ Quizzies</title>
+<style>
+@font-face { font-family: Poppins; src: url('../assets/fonts/poppins-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: Poppins; src: url('../assets/fonts/poppins-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+@font-face { font-family: Poppins; src: url('../assets/fonts/poppins-800.woff2') format('woff2'); font-weight: 800; font-display: swap; }
+:root {
+    --ink: #101A28; --slate: #5C6672; --steel: #3A4450; --mist: #F2F4F7; --rule: #DFE3E8;
+    --font: "Poppins", "Century Gothic", system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body { background: #fff; color: var(--ink); font: 400 17px/1.5 var(--font); -webkit-tap-highlight-color: transparent; }
+.top { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; padding: calc(14px + env(safe-area-inset-top)) 18px 14px; background: #000; color: #fff; }
+.top b { font-weight: 800; letter-spacing: .02em; }
+.top span { font-size: 13px; font-weight: 600; color: #9AA3AD; letter-spacing: .06em; text-transform: uppercase; }
+main { max-width: 520px; margin: 0 auto; padding: 26px 18px calc(32px + env(safe-area-inset-bottom)); }
+.screen { display: none; }
+.screen.on { display: block; animation: in .35s ease both; }
+@keyframes in { from { opacity: 0; transform: translateY(10px); } }
+.kicker { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--slate); }
+h1 { margin-top: 6px; font-size: 32px; font-weight: 800; line-height: 1.15; letter-spacing: -.01em; text-transform: uppercase; }
+h2 { margin-top: 8px; font-size: 22px; font-weight: 600; line-height: 1.35; }
+p.sub { margin-top: 12px; color: var(--slate); }
+.hatch { width: 110px; height: 10px; margin-top: 16px; background: repeating-linear-gradient(-55deg, #000 0 2px, transparent 2px 7px); }
+input { width: 100%; height: 58px; margin-top: 24px; padding: 0 18px; border: 2px solid var(--ink); border-radius: 6px; font: 600 20px var(--font); color: var(--ink); background: #fff; }
+input:focus { outline: none; box-shadow: 0 0 0 4px var(--rule); }
+.btn { display: block; width: 100%; height: 58px; margin-top: 14px; border: 0; border-radius: 999px; background: #000; color: #fff; font: 700 18px var(--font); cursor: pointer; }
+.btn:disabled { opacity: .45; }
+.btn.ghost { background: #fff; color: #000; border: 2px solid #000; }
+.note { margin-top: 14px; font-size: 14px; color: var(--slate); }
+.note.warn { color: #000; font-weight: 600; }
+.opts { display: grid; gap: 12px; margin-top: 22px; }
+.opt { display: flex; align-items: center; gap: 14px; width: 100%; min-height: 76px; padding: 12px 16px 12px 12px; border: 2px solid var(--ink); border-radius: 6px; background: #fff; color: var(--ink); font: 600 18px/1.3 var(--font); text-align: left; cursor: pointer; transition: transform .12s, background .2s, color .2s; }
+.opt:active { transform: scale(.98); }
+.opt .l { flex: none; width: 46px; height: 46px; border-radius: 50%; background: #000; color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 20px; }
+.opt.pick { background: #000; color: #fff; }
+.opt.pick .l { background: #fff; color: #000; }
+.opts.sent .opt:not(.pick) { opacity: .3; }
+.big { margin-top: 26px; padding: 26px 22px; border-radius: 6px; background: var(--mist); }
+.big.dark { background: #000; color: #fff; }
+.big .n { display: block; font-size: 56px; font-weight: 800; line-height: 1; letter-spacing: -.02em; }
+.big .t { display: block; margin-top: 8px; font-size: 17px; }
+.big.dark .t { color: #C9CFD6; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.stat { padding: 16px; border-radius: 6px; background: var(--mist); }
+.stat b { display: block; font-size: 26px; font-weight: 800; line-height: 1.1; }
+.stat span { font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--slate); }
+.why { margin-top: 14px; color: var(--slate); }
+.dots { display: inline-flex; gap: 6px; margin-top: 22px; }
+.dots i { width: 10px; height: 10px; border-radius: 50%; background: #000; animation: dot 1.2s ease-in-out infinite; }
+.dots i:nth-child(2) { animation-delay: .15s; } .dots i:nth-child(3) { animation-delay: .3s; }
+@keyframes dot { 0%, 80%, 100% { opacity: .2; } 40% { opacity: 1; } }
+#toast { position: fixed; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom)); translate: -50% 0; max-width: 90vw; padding: 12px 20px; border-radius: 999px; background: #000; color: #fff; font-size: 15px; font-weight: 600; opacity: 0; pointer-events: none; transition: opacity .25s; }
+#toast.on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .screen.on, .dots i { animation: none; } }
+</style>
+</head>
+<body>
+<header class="top"><b>AI-IZ</b><span id="who">Quizzies</span></header>
+<main>
+  <section class="screen on" id="s-load">
+    <p class="kicker">AI Challenge</p>
+    <h1>Connecting…</h1>
+    <div class="dots"><i></i><i></i><i></i></div>
+  </section>
+
+  <section class="screen" id="s-join">
+    <p class="kicker">AI Challenge</p>
+    <h1>Quizzies</h1>
+    <div class="hatch"></div>
+    <p class="sub">Enter your name to join. It shows on the big screen if you win.</p>
+    <form id="joinForm" autocomplete="off">
+      <input id="name" type="text" maxlength="24" placeholder="Your name" aria-label="Your name" required>
+      <button class="btn" type="submit" id="joinBtn">Join</button>
+    </form>
+    <p class="note warn" id="joinMsg" hidden></p>
+  </section>
+
+  <section class="screen" id="s-wait">
+    <p class="kicker" id="waitKicker">You're in</p>
+    <h1 id="waitTitle">Hi!</h1>
+    <p class="sub" id="waitText">Watch the big screen. The first question is coming.</p>
+    <div class="dots"><i></i><i></i><i></i></div>
+    <div class="stats" id="waitStats" hidden>
+      <div class="stat"><b id="wTotal">0</b><span>Points</span></div>
+      <div class="stat"><b id="wRank">–</b><span>Place</span></div>
+    </div>
+  </section>
+
+  <section class="screen" id="s-q">
+    <p class="kicker" id="qNum">Question</p>
+    <h2 id="qText"></h2>
+    <div class="opts" id="opts"></div>
+    <p class="note" id="qNote">Tap your answer. You can't change it.</p>
+  </section>
+
+  <section class="screen" id="s-closed">
+    <p class="kicker" id="cNum">Question</p>
+    <h1>Time's up!</h1>
+    <p class="sub">No answer this time. Get ready for the next one.</p>
+  </section>
+
+  <section class="screen" id="s-result">
+    <p class="kicker" id="rNum">Question</p>
+    <div class="big" id="rBox"><span class="n" id="rHead"></span><span class="t" id="rSub"></span></div>
+    <p class="why" id="rWhy"></p>
+    <div class="stats">
+      <div class="stat"><b id="rTotal">0</b><span>Points</span></div>
+      <div class="stat"><b id="rRank">–</b><span>Place</span></div>
+    </div>
+  </section>
+
+  <section class="screen" id="s-done">
+    <p class="kicker">Final results</p>
+    <h1>That's a wrap!</h1>
+    <div class="big dark"><span class="n" id="dRank">–</span><span class="t" id="dSub"></span></div>
+    <p class="sub">Look up: the champions are on the big screen.</p>
+  </section>
+
+  <section class="screen" id="s-error">
+    <p class="kicker">AI Challenge</p>
+    <h1>Can't connect</h1>
+    <p class="sub" id="errText">Check your internet connection, then try again.</p>
+    <button class="btn" type="button" id="retry">Try again</button>
+  </section>
+</main>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="../live-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+'use strict';
+const $ = s => document.querySelector(s);
+const LETTERS = ['A', 'B', 'C', 'D'];
+const KEY = 'aiz-player';
+const store = {
+    get() { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } },
+    set(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) { /* private mode */ } },
+    clear() { try { localStorage.removeItem(KEY); } catch (e) { /* private mode */ } }
+};
+const fmt = n => Number(n || 0).toLocaleString('en-MY');
+const ord = n => { const v = n % 100; return n + (['th', 'st', 'nd', 'rd'][(v - 20) % 10] || ['th', 'st', 'nd', 'rd'][v] || 'th'); };
+
+let db = null, me = store.get(), state = null, shownKey = '', sending = false, toastT = 0;
+const questions = {};
+
+function show(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id));
+    window.scrollTo(0, 0);
+}
+function current() { const s = document.querySelector('.screen.on'); return s ? s.id : ''; }
+function toast(msg) {
+    const t = $('#toast');
+    t.textContent = msg; t.classList.add('on');
+    clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2600);
+}
+function fail(msg) { $('#errText').textContent = msg || 'Check your internet connection, then try again.'; show('s-error'); }
+function setWho() { $('#who').textContent = me ? me.name : 'Quizzies'; }
+
+function askName(msg) {
+    me = null; store.clear(); setWho();
+    const m = $('#joinMsg');
+    m.hidden = !msg; m.textContent = msg || '';
+    if (current() !== 's-join') { show('s-join'); }
+}
+
+async function boot() {
+    const cfg = window.AIZ_LIVE || {};
+    if (!cfg.url || !cfg.key) return fail("The quiz isn't switched on yet. Ask the presenter.");
+    if (!window.supabase) return fail('Check your internet connection, then try again.');
+    db = window.supabase.createClient(cfg.url, cfg.key, { auth: { persistSession: false } });
+    const { data, error } = await db.from('quiz_questions').select('q, prompt, options');
+    if (error) return fail();
+    data.forEach(r => { questions[r.q] = r; });
+    db.channel('quiz-state')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'quiz_state' }, p => apply(p.new))
+        .subscribe();
+    await poll();
+    setInterval(poll, 3000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) poll(); });
+}
+
+async function poll() {
+    if (!db) return;
+    const { data, error } = await db.from('quiz_state').select('*').eq('id', 1).single();
+    if (!error && data) apply(data);
+}
+
+/* React to a state change once per (game, question, phase) */
+function apply(st) {
+    if (!st || !st.session) return;
+    state = st;
+    if (!me || me.session !== st.session) {
+        if (current() !== 's-join') askName(me ? 'A new game has started. Join again.' : '');
+        return;
+    }
+    const key = st.session + ':' + st.q + ':' + st.phase;
+    if (key === shownKey) return;
+    shownKey = key;
+    render();
+}
+
+async function myStatus() {
+    const { data, error } = await db.rpc('quiz_me', { p_player: me.id });
+    if (error) return null;
+    if (data.status === 'rejoin') { shownKey = ''; askName('A new game has started. Join again.'); return null; }
+    if (data.status === 'removed') { shownKey = ''; askName('The presenter removed that name. Join again with your real name.'); return null; }
+    return data;
+}
+
+async function render() {
+    const st = state, qn = st.q, label = qn ? 'Question ' + qn + ' of 10' : '';
+    if (st.phase === 'lobby' || !qn) {
+        $('#waitKicker').textContent = "You're in";
+        $('#waitTitle').textContent = 'Hi, ' + me.name + '!';
+        $('#waitText').textContent = 'Watch the big screen. The first question is coming.';
+        $('#waitStats').hidden = true;
+        return show('s-wait');
+    }
+    const m = await myStatus();
+    if (!m || state !== st) return;
+    if (st.phase === 'open') {
+        if (m.answered) return showLocked(label, m.choice);
+        return showQuestion(qn, label);
+    }
+    if (st.phase === 'closed') {
+        if (m.answered) return showLocked(label, m.choice, true);
+        $('#cNum').textContent = label;
+        return show('s-closed');
+    }
+    if (st.phase === 'revealed') return showResult(label, m);
+    if (st.phase === 'done') {
+        $('#dRank').textContent = ord(m.rank);
+        $('#dSub').textContent = 'of ' + m.players + ' players · ' + fmt(m.total) + ' points';
+        return show('s-done');
+    }
+}
+
+function showQuestion(qn, label) {
+    const q = questions[qn];
+    $('#qNum').textContent = label;
+    $('#qText').textContent = q ? q.prompt : 'Look at the big screen';
+    const box = $('#opts');
+    box.className = 'opts';
+    box.innerHTML = '';
+    (q ? q.options : LETTERS).forEach((text, i) => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.className = 'opt';
+        b.innerHTML = '<span class="l">' + LETTERS[i] + '</span><span class="t"></span>';
+        b.querySelector('.t').textContent = text;
+        b.addEventListener('click', () => answer(qn, i, b));
+        box.appendChild(b);
+    });
+    $('#qNote').textContent = "Tap your answer. You can't change it.";
+    show('s-q');
+}
+
+function showLocked(label, choice, timeUp) {
+    $('#waitKicker').textContent = label;
+    $('#waitTitle').textContent = 'Locked in: ' + LETTERS[choice];
+    $('#waitText').textContent = timeUp ? "Time's up. The answer is coming…" : 'Nice. Wait for the reveal…';
+    $('#waitStats').hidden = true;
+    show('s-wait');
+}
+
+function showResult(label, m) {
+    const q = questions[state.q], box = $('#rBox');
+    $('#rNum').textContent = label;
+    const right = q && m.answer != null ? LETTERS[m.answer] + ' · ' + q.options[m.answer] : '';
+    if (m.answered && m.correct) {
+        box.className = 'big dark';
+        $('#rHead').textContent = 'Correct!';
+        $('#rSub').textContent = '+' + fmt(m.points) + ' points';
+    } else {
+        box.className = 'big';
+        $('#rHead').textContent = m.answered ? 'Not quite' : 'No answer';
+        $('#rSub').textContent = 'Answer: ' + right;
+    }
+    $('#rWhy').textContent = m.explain || '';
+    $('#rTotal').textContent = fmt(m.total);
+    $('#rRank').textContent = ord(m.rank) + ' / ' + m.players;
+    show('s-result');
+}
+
+async function answer(qn, choice, btn) {
+    if (sending) return;
+    sending = true;
+    const box = $('#opts');
+    btn.classList.add('pick'); box.classList.add('sent');
+    if (navigator.vibrate) navigator.vibrate(25);
+    const { data, error } = await db.rpc('quiz_answer', { p_player: me.id, p_q: qn, p_choice: choice });
+    sending = false;
+    if (error) {
+        btn.classList.remove('pick'); box.classList.remove('sent');
+        return toast("Didn't send. Tap again.");
+    }
+    if (data === 'ok' || data === 'duplicate') return showLocked('Question ' + qn + ' of 10', choice, state && state.phase !== 'open');
+    if (data === 'closed') { $('#cNum').textContent = 'Question ' + qn + ' of 10'; return show('s-closed'); }
+    if (data === 'rejoin') { shownKey = ''; return askName('A new game has started. Join again.'); }
+    if (data === 'removed') { shownKey = ''; return askName('The presenter removed that name. Join again with your real name.'); }
+}
+
+$('#joinForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const name = $('#name').value.trim();
+    if (!name) return;
+    const btn = $('#joinBtn');
+    btn.disabled = true; btn.textContent = 'Joining…';
+    const { data, error } = await db.rpc('quiz_join', { p_name: name });
+    btn.disabled = false; btn.textContent = 'Join';
+    if (error) return toast("Couldn't join. Check your internet and try again.");
+    me = { id: data.player_id, session: data.session, name: data.name };
+    store.set(me); setWho();
+    $('#name').blur();
+    shownKey = '';
+    if (state && state.session === me.session) render(); else poll();
+});
+
+$('#retry').addEventListener('click', () => location.reload());
+
+setWho();
+boot().catch(() => fail());
+})();
+</script>
+</body>
+</html>

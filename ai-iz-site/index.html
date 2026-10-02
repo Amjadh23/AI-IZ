@@ -834,6 +834,23 @@ input[type="range"] { width: 190px; accent-color: #000; cursor: pointer; }
 .qrules li { display: flex; align-items: center; gap: 18px; font-size: 28px; }
 .qrules li .ic { width: 52px; height: 52px; }
 .qrules li .ic svg.i { width: 24px; height: 24px; }
+.live-panel { position: absolute; right: 120px; top: 200px; width: 640px; padding: 34px 36px 30px; border-radius: 4px; background: var(--dark-raise); }
+.lp-msg { margin-top: 12px; font-size: 22px; line-height: 1.45; color: var(--dark-muted); }
+.lp-pin { display: flex; gap: 12px; margin-top: 22px; }
+.lp-pin input { flex: 1; min-width: 0; height: 56px; border-radius: 6px; border: 2px solid var(--dark-rule); background: var(--dark-surface); color: #fff; padding: 0 16px; font: 600 22px var(--font); }
+.lp-pin input:focus { border-color: #fff; outline: none; }
+.lp-join { display: grid; grid-template-columns: 280px 1fr; gap: 30px; align-items: center; }
+.lp-qr { width: 280px; height: 280px; border-radius: 6px; overflow: hidden; background: #fff; }
+.lp-qr svg { display: block; width: 100%; height: 100%; }
+.lp-url { margin-top: 10px; font-size: 22px; font-weight: 700; line-height: 1.35; word-break: break-all; }
+.lp-count { margin-top: 26px; font-size: 22px; color: var(--dark-muted); }
+.lp-count b { display: block; font-size: 84px; font-weight: 800; line-height: 1; color: #fff; font-variant-numeric: tabular-nums; }
+.lp-names { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; max-height: 136px; overflow: hidden; }
+.lp-names:empty::before { content: 'Names appear here as people join.'; font-size: 18px; color: var(--dark-muted); }
+.lp-names button { height: 38px; padding: 0 14px; border-radius: 999px; border: 0; background: var(--dark-surface); color: #fff; font: 600 17px var(--font); cursor: pointer; }
+.lp-names button:hover { background: #fff; color: #000; text-decoration: line-through; }
+.lp-actions { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 22px; }
+.lp-actions .caption { font-size: 16px; }
 
 /* Quiz questions */
 .q-top { position: relative; height: 40px; }
@@ -862,6 +879,10 @@ input[type="range"] { width: 190px; accent-color: #000; cursor: pointer; }
 .q-why { margin-top: 30px; font-size: 27px; line-height: 1.45; opacity: 0; translate: 0 14px; transition: opacity .5s var(--ease) .2s, translate .6s var(--ease) .2s; }
 .quiz.revealed .q-why { opacity: 1; translate: 0 0; }
 .q-why b { font-weight: 800; }
+.q-live { position: absolute; left: 0; bottom: 0; display: flex; align-items: center; gap: 14px; height: 58px; padding: 0 26px; border-radius: 999px; background: var(--oryn-mist); font-size: 20px; font-weight: 600; }
+.q-live b { font-size: 26px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.q-live .dot { width: 12px; height: 12px; border-radius: 50%; background: #000; animation: blink 1.2s steps(1) infinite; }
+.q-live.closed .dot { animation: none; opacity: .3; }
 .q-actions { position: absolute; right: 0; top: 150px; display: flex; flex-direction: column; gap: 10px; }
 
 /* Tie-breaker */
@@ -870,6 +891,25 @@ input[type="range"] { width: 190px; accent-color: #000; cursor: pointer; }
 .tie-n { margin-top: 30px; font-size: 30px; opacity: 0; transition: opacity .5s; }
 .tie-n b { font-size: 120px; font-weight: 800; letter-spacing: -.02em; line-height: 1; vertical-align: -.1em; margin-right: 14px; }
 .tie.revealed .tie-n { opacity: 1; }
+
+/* Podium */
+.podium { position: absolute; left: 120px; bottom: 124px; display: flex; align-items: flex-end; gap: 22px; }
+.pod { width: 330px; opacity: 0; translate: 0 80px; transition: opacity .7s var(--ease), translate .9s var(--ease); }
+.pod .pod-name { font-size: 30px; font-weight: 800; line-height: 1.15; text-transform: uppercase; letter-spacing: -.01em; }
+.pod .pod-score { margin-top: 6px; font-size: 22px; color: var(--oryn-slate); font-weight: 600; }
+.pod .pod-block { margin-top: 18px; border-radius: 4px 4px 0 0; background: var(--oryn-mist); display: flex; align-items: flex-start; padding: 26px 28px; font-size: 110px; font-weight: 800; line-height: .9; letter-spacing: -.03em; }
+.pod[data-rank="1"] .pod-block { height: 430px; background: #000; color: #fff; }
+.pod[data-rank="2"] .pod-block { height: 320px; background: var(--oryn-steel); color: #fff; }
+.pod[data-rank="3"] .pod-block { height: 240px; }
+#s-podium[data-step="1"] .pod[data-rank="3"],
+#s-podium[data-step="2"] .pod[data-rank="3"], #s-podium[data-step="2"] .pod[data-rank="2"],
+#s-podium[data-step="3"] .pod { opacity: 1; translate: 0 0; }
+.pod-rest { position: absolute; right: 120px; bottom: 124px; width: 520px; display: flex; flex-direction: column; gap: 10px; }
+.pod-rest li { display: grid; grid-template-columns: 48px 1fr auto; align-items: center; gap: 12px; height: 60px; padding: 0 22px; border-radius: 4px; background: var(--oryn-mist); font-size: 22px; font-weight: 600; }
+.pod-rest li b { font-weight: 800; }
+#s-podium [data-id] { cursor: pointer; }
+.pod-msg { margin-top: 24px; }
+canvas.confetti { position: absolute; inset: 0; width: 1920px; height: 1080px; pointer-events: none; z-index: 5; }
 
 /* Cheat sheet */
 .cheat { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 44px; }
@@ -919,7 +959,7 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
 
 /* Print / PDF export: show every animated element in its final state */
 @media print {
-    .rv, .rv-l, .rv-s, .tl-card, .tl-now, .frag, .chev path { opacity: 1 !important; translate: none !important; animation: none !important; }
+    .rv, .rv-l, .rv-s, .tl-card, .tl-now, .frag, .pod, .chev path { opacity: 1 !important; translate: none !important; animation: none !important; }
     .wm-line > span { translate: none !important; animation: none !important; }
     .tl-fill, .cot-fill { scale: 1 1 !important; animation: none !important; }
     .tl-dot { scale: 1 !important; animation: none !important; }
@@ -2108,14 +2148,34 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
     <div class="hatch rv" style="--d:3"></div>
     <ul class="qrules">
       <li class="rv" style="--d:4"><span class="ic"><svg class="i"><use href="#i-clock"/></svg></span><span class="ed">10 questions · 20 seconds each</span></li>
-      <li class="rv" style="--d:5"><span class="ic"><svg class="i"><use href="#i-hash"/></svg></span><span class="ed">Answer on paper or hold up 1–4 fingers for A–D</span></li>
-      <li class="rv" style="--d:6"><span class="ic"><svg class="i"><use href="#i-check"/></svg></span><span class="ed">Keep count of your own correct answers</span></li>
+      <li class="rv" style="--d:5"><span class="ic"><svg class="i"><use href="#i-phone"/></svg></span><span class="ed">Scan the QR code and enter your name</span></li>
+      <li class="rv" style="--d:6"><span class="ic"><svg class="i"><use href="#i-zap"/></svg></span><span class="ed">Right answers score 500–1,000. Faster scores more</span></li>
       <li class="rv" style="--d:7"><span class="ic"><svg class="i"><use href="#i-trophy"/></svg></span><span class="ed">Presenter's decision is final (teh tarik bribes considered)</span></li>
     </ul>
   </div>
+  <div class="live-panel rv" style="--d:4" data-noedit>
+    <div class="lp-off">
+      <p class="kicker">Live quiz</p>
+      <p class="lp-msg" data-live-msg>Connecting…</p>
+      <form class="lp-pin" data-live-pin hidden><input type="password" placeholder="Presenter PIN" aria-label="Presenter PIN" autocomplete="off"><button class="btn solid sm" type="submit">Connect</button></form>
+    </div>
+    <div class="lp-on" hidden>
+      <div class="lp-join">
+        <div class="lp-qr"><svg viewBox="0 0 33 33" aria-label="QR code to join the quiz" role="img"><path fill="#fff" d="M0 0h33v33h-33z"/><path class="qrline" stroke="#000" d="M2 2.5h7m1 0h2m2 0h1m4 0h2m3 0h7m-29 1h1m5 0h1m4 0h2m3 0h2m2 0h1m1 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m4 0h1m1 0h5m2 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h5m3 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h1m3 0h1m3 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m1 0h5m2 0h2m3 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-20 1h3m2 0h1m1 0h1m-17 1h1m1 0h1m3 0h2m4 0h3m1 0h1m3 0h1m2 0h1m2 0h1m1 0h1m-27 1h2m1 0h1m2 0h3m1 0h1m2 0h3m1 0h2m1 0h2m3 0h2m-29 1h1m1 0h1m1 0h1m1 0h3m2 0h1m1 0h8m1 0h1m1 0h3m1 0h1m-28 1h1m1 0h3m2 0h1m1 0h2m6 0h1m1 0h1m4 0h1m-25 1h4m1 0h1m1 0h1m2 0h5m3 0h1m2 0h2m4 0h1m-29 1h1m1 0h2m1 0h1m1 0h1m1 0h2m2 0h1m1 0h3m1 0h2m1 0h2m3 0h2m-26 1h1m1 0h2m1 0h2m1 0h1m3 0h1m3 0h1m1 0h1m1 0h1m4 0h1m-29 1h3m7 0h2m1 0h1m1 0h2m1 0h1m5 0h1m-25 1h1m1 0h2m1 0h3m2 0h1m2 0h1m2 0h1m1 0h1m1 0h4m4 0h1m-24 1h1m1 0h5m3 0h1m1 0h1m1 0h5m2 0h3m-29 1h7m1 0h1m2 0h6m2 0h1m1 0h2m1 0h2m2 0h1m-25 1h1m4 0h3m2 0h2m2 0h3m1 0h3m-25 1h3m1 0h1m1 0h3m1 0h1m2 0h2m2 0h1m1 0h7m1 0h1m-20 1h1m2 0h4m1 0h1m3 0h1m3 0h3m1 0h1m-29 1h7m1 0h5m2 0h1m1 0h2m1 0h1m1 0h1m1 0h1m3 0h1m-29 1h1m5 0h1m2 0h3m1 0h1m4 0h3m3 0h1m3 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m2 0h1m2 0h2m1 0h7m2 0h1m-29 1h1m1 0h3m1 0h1m3 0h1m2 0h1m2 0h2m2 0h1m3 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h2m1 0h2m5 0h1m2 0h2m-29 1h1m5 0h1m2 0h1m1 0h1m4 0h1m1 0h1m1 0h1m2 0h1m1 0h1m-26 1h7m1 0h1m1 0h1m5 0h1m1 0h3m2 0h3m2 0h1"/></svg></div>
+        <div>
+          <p class="kicker">Join on your phone</p>
+          <p class="lp-url" data-live-url>amjadh23.github.io/AI-IZ/play</p>
+          <p class="lp-count"><b data-live-count>0</b>joined</p>
+        </div>
+      </div>
+      <div class="lp-names" data-live-names></div>
+      <div class="lp-actions"><span class="caption">Click a name to remove it.</span><button class="btn sm" type="button" data-live-new>New game</button></div>
+    </div>
+  </div>
   <aside class="notes">
-    <p>Each question starts a 20-second timer. Click the timer or press T to pause it if the room needs a moment. The first → reveals the answer, the next moves on.</p>
-    <p>If you're running it on Quizizz instead, still use these slides to show the answers.</p>
+    <p>Before the room arrives: type the presenter PIN in the panel once (this laptop remembers it), then click New game to clear rehearsal players.</p>
+    <p>Leave this slide up while everyone scans and joins. Click a name to remove a joke name. Each question then opens answering on the phones and closes when the timer ends or you reveal. T pauses only the on-screen timer; phones can still answer.</p>
+    <p>If the internet drops, run it the old way: answers on paper or 1–4 fingers for A–D.</p>
   </aside>
 </section>
 
@@ -2292,11 +2352,27 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
   <aside class="notes"><p>Everyone writes a number down first. Press → to reveal the live count and the split. Ask who got 10/10 on the quiz, then who guessed closest here.</p></aside>
 </section>
 
+<!-- S57 · CHAMPIONS (live leaderboard) -->
+<section class="slide" id="s-podium" data-head="AI Challenge · Results" aria-label="And the champions are">
+  <div class="wrap">
+    <p class="kicker rv">Final results · press → to reveal</p>
+    <h2 class="h-title rv" style="--d:1">And the champions are…</h2>
+    <p class="caption pod-msg" data-noedit hidden></p>
+  </div>
+  <div class="podium" data-noedit>
+    <div class="pod" data-rank="2"><p class="pod-name">—</p><p class="pod-score"></p><div class="pod-block">2</div></div>
+    <div class="pod" data-rank="1"><p class="pod-name">—</p><p class="pod-score"></p><div class="pod-block">1</div></div>
+    <div class="pod" data-rank="3"><p class="pod-name">—</p><p class="pod-score"></p><div class="pod-block">3</div></div>
+  </div>
+  <ol class="pod-rest" data-noedit></ol>
+  <aside class="notes"><p>Press → three times: 3rd, 2nd, then the winner with confetti. Scores come live from the phones. Click a name to remove a joke name and the podium reshuffles.</p></aside>
+</section>
+
 <!-- =====================================================================
      PENUTUP (CLOSING)
      ===================================================================== -->
 
-<!-- S57 · CHEAT SHEET -->
+<!-- S58 · CHEAT SHEET -->
 <section class="slide" id="s-cheat" data-head="AI-IZ · Penutup" data-menu="Penutup" aria-label="Your AI cheat sheet">
   <div class="wrap">
     <p class="kicker rv">Screenshot this</p>
@@ -2340,7 +2416,7 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
   <aside class="notes"><p>Give people 30 seconds to take a photo of this slide.</p></aside>
 </section>
 
-<!-- S58 · CLOSING (curve returns: title surfaces only) -->
+<!-- S59 · CLOSING (curve returns: title surfaces only) -->
 <section class="slide cover closing" id="s-end" data-chrome="none" aria-label="Terima kasih">
   <div class="curve-wrap" aria-hidden="true"><div class="curve"></div></div>
   <div class="chev-field" data-chevrons="5,6,7" aria-hidden="true"></div>
@@ -2399,11 +2475,13 @@ body.editing .slide [data-eid]:focus { outline: 3px solid var(--oryn-slate); }
 <div id="blackout" aria-hidden="true"></div>
 <div id="toast" role="status" aria-live="polite"></div>
 
+<script src="live-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" async></script>
 <script>
 /* =====================================================================
    AI-IZ: DECK RUNTIME
    Sections: 0 snapshot · 1 helpers · 2 editor · 3 deck · 4 sound ·
-   5 tokenizer · 6 widgets · 7 quiz · 8 overlays + presenter · 9 boot
+   5 tokenizer · 6 widgets · 7 live quiz · 8 overlays + presenter · 9 boot
    ===================================================================== */
 (function () {
 'use strict';
@@ -3200,13 +3278,162 @@ function initTie() {
     });
 }
 
-/* === 7. QUIZ === */
+/* Monochrome confetti: squares, dots and chevrons */
+function confetti(slide) {
+    if (REDUCED) return;
+    let cv = $('canvas.confetti', slide);
+    if (!cv) { cv = document.createElement('canvas'); cv.className = 'confetti'; cv.width = 1920; cv.height = 1080; slide.appendChild(cv); }
+    const ctx = cv.getContext('2d');
+    const COLS = ['#000000', '#3A4450', '#5C6672', '#C9CFD6', '#101A28'];
+    const P = Array.from({ length: 180 }, () => ({
+        x: 700 + Math.random() * 520, y: 360 + Math.random() * 160,
+        vx: (Math.random() - .5) * 28, vy: -Math.random() * 26 - 8,
+        g: .55 + Math.random() * .25, r: Math.random() * 6.28, vr: (Math.random() - .5) * .3,
+        s: 12 + Math.random() * 16, c: COLS[Math.floor(Math.random() * COLS.length)], k: Math.floor(Math.random() * 3)
+    }));
+    const t0 = performance.now();
+    cancelAnimationFrame(cv._raf);
+    const frame = now => {
+        const t = now - t0;
+        ctx.clearRect(0, 0, 1920, 1080);
+        P.forEach(p => {
+            p.vy += p.g; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+            ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r);
+            ctx.globalAlpha = Math.max(0, 1 - t / 4600);
+            if (p.k === 0) { ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 3, p.s, p.s * .66); }
+            else if (p.k === 1) { ctx.fillStyle = p.c; ctx.beginPath(); ctx.arc(0, 0, p.s / 2.6, 0, 6.283); ctx.fill(); }
+            else { ctx.strokeStyle = p.c; ctx.lineWidth = 4; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(-p.s / 3, -p.s / 2); ctx.lineTo(p.s / 3, 0); ctx.lineTo(-p.s / 3, p.s / 2); ctx.stroke(); }
+            ctx.restore();
+        });
+        if (t < 4800) cv._raf = requestAnimationFrame(frame); else ctx.clearRect(0, 0, 1920, 1080);
+    };
+    cv._raf = requestAnimationFrame(frame);
+}
+
+/* === 7. LIVE QUIZ (Supabase) + QUIZ ===
+   Phones join at play/ and answer there. The deck opens and closes each
+   question and reads the leaderboard. Without live-config.js, the
+   Supabase library or the internet, the quiz simply runs on screen. */
+const Live = {
+    cfg: window.AIZ_LIVE || {},
+    db: null,
+    pin: store.get('aiz-live-pin', ''),
+    ready: false,
+    init() {
+        const p = this.panel = $('#s-quiz .live-panel');
+        if (!p) return;
+        if (this.cfg.play) $('[data-live-url]', p).textContent = this.cfg.play.replace(/^https?:\/\//, '').replace(/\/$/, '');
+        $('[data-live-pin]', p).addEventListener('submit', e => {
+            e.preventDefault();
+            const v = $('input', e.target).value.trim();
+            if (v) { this.pin = v; this.check(); }
+        });
+        $('[data-live-new]', p).addEventListener('click', () => this.newGame());
+        $('[data-live-names]', p).addEventListener('click', e => {
+            const b = e.target.closest('[data-id]');
+            if (b) this.kick(b.dataset.id, b.textContent);
+        });
+        /* Moving on unconnected means phones never get the questions: warn once */
+        let warned = false;
+        Deck.on('s-quiz', {
+            enter: () => { warned = false; this.watchLobby(true); },
+            leave: () => this.watchLobby(false),
+            next: () => {
+                if (this.ready || warned || !this.cfg.url) return false;
+                warned = true;
+                toast("Phones aren't connected: enter the PIN on the right. Press → again to run the quiz on screen only.");
+                return true;
+            }
+        });
+        if (!this.cfg.url || !this.cfg.key) { this.view('off', 'Live quiz is not set up yet (live-config.js). The quiz still runs on screen.'); return; }
+        let tries = 0;
+        const wait = () => {
+            if (window.supabase) { this.db = window.supabase.createClient(this.cfg.url, this.cfg.key, { auth: { persistSession: false } }); return this.pin ? this.check() : this.view('pin', 'Enter the presenter PIN to connect the phones.'); }
+            if (++tries > 40) return this.view('off', 'No internet, so the live quiz is off. Run it on screen: paper or 1–4 fingers.');
+            setTimeout(wait, 250);
+        };
+        wait();
+    },
+    async rpc(fn, args) {
+        const { data, error } = await this.db.rpc(fn, args);
+        if (error) throw error;
+        return data;
+    },
+    async check() {
+        this.view('off', 'Connecting…');
+        try {
+            await this.rpc('quiz_control', { p_pin: this.pin, p_action: 'check', p_q: null });
+            store.set('aiz-live-pin', this.pin);
+            this.ready = true;
+            this.view('on');
+            this.refreshLobby();
+            if (Deck.slides[Deck.i] && Deck.slides[Deck.i].id === 's-quiz') this.watchLobby(true);
+        } catch (e) {
+            const bad = /PIN/i.test(e.message || '');
+            if (bad) { this.pin = ''; store.set('aiz-live-pin', ''); }
+            this.ready = false;
+            this.view('pin', bad ? e.message + '.' : 'Could not reach Supabase. Check the internet, then connect again.');
+        }
+    },
+    view(mode, msg) {
+        const p = this.panel;
+        $('.lp-off', p).hidden = mode === 'on';
+        $('.lp-on', p).hidden = mode !== 'on';
+        $('[data-live-pin]', p).hidden = mode !== 'pin';
+        if (msg) $('[data-live-msg]', p).textContent = msg;
+    },
+    /* Presenter actions; failures show a toast and never block the deck */
+    async ctl(action, q) {
+        if (!this.ready) return null;
+        try { return await this.rpc('quiz_control', { p_pin: this.pin, p_action: action, p_q: q == null ? null : q }); }
+        catch (e) { toast('Live quiz: ' + (e.message || 'connection problem')); return null; }
+    },
+    watchLobby(on) {
+        clearInterval(this.lobbyT);
+        if (on && this.ready) { this.refreshLobby(); this.lobbyT = setInterval(() => this.refreshLobby(), 2000); }
+    },
+    async refreshLobby() {
+        if (!this.ready) return;
+        try {
+            const d = await this.rpc('quiz_lobby', { p_pin: this.pin });
+            $('[data-live-count]', this.panel).textContent = d.count;
+            $('[data-live-names]', this.panel).innerHTML = d.players.map(p => `<button type="button" data-id="${esc(p.id)}">${esc(p.name)}</button>`).join('');
+        } catch (e) { /* the next poll retries */ }
+    },
+    async newGame() {
+        if (!this.ready || !window.confirm('Start a new game? Everyone who has joined so far is cleared.')) return;
+        if (await this.ctl('new')) { document.dispatchEvent(new Event('live-new')); toast('New game. Scan the QR code to join.'); this.refreshLobby(); }
+    },
+    async kick(id, name) {
+        if (!this.ready || !window.confirm('Remove "' + name + '" from the game?')) return;
+        try { await this.rpc('quiz_kick', { p_pin: this.pin, p_player: id }); this.refreshLobby(); document.dispatchEvent(new Event('live-board')); }
+        catch (e) { toast('Live quiz: ' + (e.message || 'connection problem')); }
+    }
+};
+
 function initQuiz() {
     $$('.slide.quiz').forEach(s => {
         const ans = +s.dataset.answer, dur = +(s.dataset.time || 20);
         const opts = $$('.q-opt', s), ring = $('.q-ring', s), sec = $('.q-sec', s), timer = $('.q-timer', s);
         const C = 2 * Math.PI * 70;
-        let raf = 0, t0 = 0, revealed = false, lastSec = dur, pausedAt = 0;
+        const qn = +s.id.replace('s-q', '');
+        let raf = 0, t0 = 0, revealed = false, lastSec = dur, pausedAt = 0, countT = 0;
+        /* Live: "18 of 31 answered" pill, polled while the question is on screen */
+        const liveCount = async () => {
+            if (!Live.ready) return;
+            let el = $('.q-live', s);
+            if (!el) {
+                el = document.createElement('p'); el.className = 'q-live';
+                el.innerHTML = '<span class="dot"></span><b>0</b><span class="q-of">answered</span>';
+                $('.wrap', s).appendChild(el);
+            }
+            try {
+                const d = await Live.rpc('quiz_count', { p_q: qn });
+                $('b', el).textContent = d.answers;
+                $('.q-of', el).textContent = 'of ' + d.players + ' answered';
+            } catch (e) { /* next poll retries */ }
+        };
+        const watch = on => { clearInterval(countT); if (on) { liveCount(); countT = setInterval(liveCount, 1500); } };
         const draw = left => {
             sec.textContent = left > 0 ? Math.ceil(left) : 'TIME';
             ring.style.strokeDashoffset = (C * (1 - left / dur)).toFixed(2);
@@ -3215,7 +3442,11 @@ function initQuiz() {
         };
         const loop = now => {
             const left = Math.max(0, dur - (now - t0) / 1000), c = Math.ceil(left);
-            if (c !== lastSec) { lastSec = c; if (c <= 5 && c > 0) Sound.warn(); if (c === 0) Sound.end(); }
+            if (c !== lastSec) {
+                lastSec = c;
+                if (c <= 5 && c > 0) Sound.warn();
+                if (c === 0) { Sound.end(); setTimeout(() => { if (!revealed) { Live.ctl('close', qn); const el = $('.q-live', s); if (el) el.classList.add('closed'); } }, 1000); }
+            }
             draw(left);
             if (left > 0 && !revealed) raf = requestAnimationFrame(loop);
         };
@@ -3231,19 +3462,74 @@ function initQuiz() {
             if (revealed) return;
             revealed = true; cancelAnimationFrame(raf); setPaused(false);
             s.classList.add('revealed');
+            Live.ctl('reveal', qn).then(() => { watch(false); liveCount(); });
+            const el = $('.q-live', s); if (el) el.classList.add('closed');
             opts.forEach((o, k) => o.classList.toggle('correct', k === ans));
             Sound.win();
         };
         opts.forEach(o => o.addEventListener('click', reveal));
+        /* A new live game makes every question playable again */
+        document.addEventListener('live-new', () => {
+            revealed = false; cancelAnimationFrame(raf); watch(false); setPaused(false);
+            s.classList.remove('revealed');
+            opts.forEach(o => o.classList.remove('correct'));
+            const el = $('.q-live', s); if (el) el.remove();
+        });
         timer.setAttribute('role', 'button');
         timer.setAttribute('aria-label', 'Pause or resume the timer (T)');
         timer.addEventListener('click', togglePause);
         s._pauseTimer = togglePause;
         Deck.on(s.id, {
-            enter: () => { if (!revealed) start(); },
-            leave: () => cancelAnimationFrame(raf),
+            enter: () => {
+                if (revealed) { liveCount(); return; }
+                start();
+                const el = $('.q-live', s); if (el) el.classList.remove('closed');
+                if (Live.ready) Live.ctl('open', qn).then(() => watch(true));
+            },
+            leave: () => { cancelAnimationFrame(raf); watch(false); },
             next: () => { if (!revealed) { reveal(); return true; } return false; }
         });
+    });
+}
+
+/* Champions: podium + places 4–10, read live from Supabase */
+function initPodium() {
+    const s = $('#s-podium');
+    if (!s) return;
+    let step = 0, rows = [];
+    const msg = $('.pod-msg', s);
+    const paint = () => {
+        [1, 2, 3].forEach(r => {
+            const el = $(`.pod[data-rank="${r}"]`, s), t = rows[r - 1], name = $('.pod-name', el);
+            name.textContent = t ? t.name : '—';
+            if (t) name.dataset.id = t.id; else delete name.dataset.id;
+            $('.pod-score', el).textContent = t ? fmt(t.score) + ' points' : '';
+        });
+        $('.pod-rest', s).innerHTML = rows.slice(3).map((t, k) => `<li data-id="${esc(t.id)}" data-name="${esc(t.name)}"><span>${k + 4}</span>${esc(t.name)}<b>${fmt(t.score)}</b></li>`).join('');
+    };
+    const load = async () => {
+        if (!Live.ready) {
+            rows = []; paint();
+            msg.hidden = false; msg.textContent = 'Live scores are not connected. Ask the room who got the most right!';
+            return;
+        }
+        msg.hidden = true;
+        try { rows = await Live.rpc('quiz_board', { p_pin: Live.pin, p_limit: 10 }) || []; }
+        catch (e) { toast('Live quiz: could not load the scores'); }
+        paint();
+    };
+    s.addEventListener('click', e => {
+        const el = e.target.closest('[data-id]');
+        if (el) Live.kick(el.dataset.id, el.dataset.name || el.textContent);
+    });
+    document.addEventListener('live-board', () => { if (Deck.slides[Deck.i] === s) load(); });
+    const apply = () => { s.dataset.step = step; };
+    Deck.on('s-podium', {
+        enter: (sl, opt) => { step = opt && opt.back ? 3 : 0; apply(); Live.ctl('done'); load(); },
+        next: () => {
+            if (step < 3) { step++; apply(); if (step === 3) { Sound.win(); confetti(s); } else Sound.tick(); return true; }
+            return false;
+        }
     });
 }
 
@@ -3399,7 +3685,9 @@ initGuess();
 initCtx();
 initLean();
 initTie();
+Live.init();
 initQuiz();
+initPodium();
 applyBinds(document);
 $$('[data-bind="total"]').forEach(el => { el.textContent = Deck.total; });
 
@@ -3417,7 +3705,7 @@ Deck.start();
 /* Fetch the tokenizer in the background so Modul 3 is instant */
 setTimeout(() => TOK.load(), 1500);
 
-window.AIZ = { Deck, Overlays, TOK, Editor, toggleTimer };
+window.AIZ = { Deck, Overlays, TOK, Editor, Live, toggleTimer };
 })();
 </script>
 </body>
